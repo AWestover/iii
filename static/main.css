@@ -1,0 +1,11 @@
+body
+{
+		background-color: lightblue;
+}
+
+.well
+{
+	background-color: lightgrey;
+	padding: 3%;
+	margin: 3%;
+}
