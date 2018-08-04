@@ -12,19 +12,19 @@ def create_app(test_config=None):
     except OSError:
         pass
 
+    @app.route('/index')
     @app.route('/')
     def index():
         print('INDEX')
         return render_template('index.html')
 
-    @app.route('/login', methods=('GET', 'POST'))
+    @app.route('/signin', methods=('GET', 'POST'))
     def login():
         print('asdfasdfasdf')
-        return render_template('login.html')
+        return render_template('signin.html')
 
     @app.route('/signup')
     def signup():
-        print(request.method)
         return render_template('signup.html')
 
     @app.route('/main')
