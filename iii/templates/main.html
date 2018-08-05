@@ -17,6 +17,9 @@
 <button class="btn btn-lg" onclick="logAnnoyance('you are stupid');">You are annoying</button>
 <button class="btn btn-lg" onclick="logAnnoyance('you are very dumb');">You are mean</button>
 
+<div class="card" id="lognew">
+</div>
+
 <div class="card" id="log">
 	<h1>annoying</h1>
 </div>
@@ -25,32 +28,43 @@
 
     setInterval(getAnnoyances, 2000);
 
+    function displayThem(data)
+    {
+        let tmp = "<h1>annoying new</h1>";
+        for (let i = 0; i < data.length; i++)
+        {
+            tmp += "<h1>group: " + data[i][0];
+            tmp += "<br>annoyance: " + data[i][1] + "</h1>";
+        }
+        $("#lognew").html(tmp);
+    }
+
     function getAnnoyances()
     {
-        $.get( "/annoyance", {"group": "thegroup"}, function( data ) {
-            console.log(data);
-            alert( "Load was performed." );
+        $.get( "/getAnnoyances", {"group": "x"}, function( data ) {
+            displayThem(data["annoyances"]);
         });
     }
 
-  function createEntry(data)
-  {
-    let tmp = "Dates "+ data['dts'];
-    tmp += "<br>";
-    tmp += "Annoyance " + data["annoyance"];
-    tmp += "<br><br>"
-    return tmp;
-  }
-
-  function logAnnoyance(annoyance)
-  {
-    $.notify("annoyaance logged " + annoyance);
-    let data = {
-      "dts": new Date(Date.now()),
-      "annoyance": annoyance
+    function createEntry(data)
+    {
+        let tmp = "Dates "+ data['dts'];
+        tmp += "<br>";
+        tmp += "Annoyance " + data["annoyance"];
+        tmp += "<br><br>"
+        return tmp;
     }
-    $('div#log').append(createEntry(data));
-    $.post("/annoyance", {"thegroup": "x", "stupid": annoyance});
-  }
+
+    function logAnnoyance(annoyance)
+    {
+        $.notify("annoyance logged " + annoyance);
+        let data = {
+          "dts": new Date(Date.now()),
+          "annoyance": annoyance
+        }
+        $('div#log').append(createEntry(data));
+        $.get("/insertAnnoyance", {"thegroup": "x", "stupid": "blah"});
+    }
+
 </script>
 {% endblock %}

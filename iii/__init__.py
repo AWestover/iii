@@ -2,7 +2,7 @@
 
 import os
 
-from flask import Blueprint, Flask, redirect, render_template, request, session, url_for
+from flask import Blueprint, Flask, redirect, render_template, request, session, url_for, jsonify
 
 from . import db
 
@@ -34,12 +34,14 @@ def create_app(test_config=None):
         else:
             return redirect(url_for('signin', login='fail'))
 
-    @app.route('/annoyance', methods=["GET", "POST"])
-    def annoyance():
-        if request.method == "GET":
-            return db.selectAnnoyances(request.args["group"])
-        elif request.method == "POST":
-            db.insertAnnoyance(request.args)
+    @app.route('/insertAnnoyance', methods=["GET"])
+    def insertAnnoyance():
+        db.insertAnnoyance(request.args)
+        return ""
+    
+    @app.route('/getAnnoyances', methods=["GET"])
+    def getAnnoyances():
+        return jsonify({"annoyances": db.selectAnnoyances(request.args["group"])})
 
     @app.route('/database', methods=["GET"])
     def database():
