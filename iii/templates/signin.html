@@ -11,8 +11,7 @@
 {% endblock %}
 
 {% block content %}
-<h1>iii</h1>
-<form action="/main">
+<form action="/main" method="post">
     <label for="uname"><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="uname" required>
 
@@ -29,4 +28,14 @@
 <form action="/signup">
 	<button class="btn btn-lg">sign up</button>
 </form>
+
+<script>
+    let url = new URL(window.location.href);
+    let loginFail = url.searchParams.get("login");
+    if (loginFail == "fail")
+    {
+        $.notify("BAD LOGIN");
+    }
+</script>
+
 {% endblock %}

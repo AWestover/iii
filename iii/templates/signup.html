@@ -11,21 +11,31 @@
 {% endblock %}
 
 {% block content %}
-<form action="/main">
+<form action="/signup" method="post">
     <label for="uname"><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="uname" required>
 
     <label for="pwd"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="pwd" required>
 
-    <button type="submit">Login</button>
+    <button type="submit">Sign up</button>
 </form>
 
-<form action="/index">
+<form action="/" method="GET">
 	<button class="btn btn-lg">home</button>
 </form>
 <br>
-<form action="/signin">
-	<button class="btn btn-lg">sign in</button>
+<form action="/signup" method="GET">
+	<button class="btn btn-lg">sign up</button>
 </form>
+
+<script>
+    let url = new URL(window.location.href);
+    let loginFail = url.searchParams.get("signup");
+    if (loginFail == "fail")
+    {
+        $.notify("BAD SIGNUP");
+    }
+</script>
+
 {% endblock %}

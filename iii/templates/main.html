@@ -22,6 +22,17 @@
 </div>
 
 <script>
+
+    setInterval(getAnnoyances, 2000);
+
+    function getAnnoyances()
+    {
+        $.get( "/annoyance", {"group": "thegroup"}, function( data ) {
+            console.log(data);
+            alert( "Load was performed." );
+        });
+    }
+
   function createEntry(data)
   {
     let tmp = "Dates "+ data['dts'];
@@ -39,6 +50,7 @@
       "annoyance": annoyance
     }
     $('div#log').append(createEntry(data));
+    $.post("/annoyance", {"thegroup": "x", "stupid": annoyance});
   }
 </script>
 {% endblock %}

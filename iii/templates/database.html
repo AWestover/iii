@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block title %}database{% endblock %}
+
+{% block header %}
+	<h1>iii db</h1>
+{% endblock %}
+
+{% block content %}
+
+{% for entry in  database %}
+	<h1>{{ entry }}</h1>
+{% endfor %}
+
+{% endblock %}
