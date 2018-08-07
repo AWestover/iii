@@ -8,26 +8,26 @@
 
 {% block header %}
 	<h1>iii sign up</h1>
+  <form action="/" method="GET">
+  	<button class="btn btn-lg">home</button>
+  </form>
+  <form action="/signin" method="GET">
+  	<button class="btn btn-lg">sign in</button>
+  </form>
 {% endblock %}
 
 {% block content %}
-<form action="/signup" method="post">
+<div class="form-group">
+  <form action="/signup" method="post">
     <label for="uname"><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="uname" required>
-
+    <br>
     <label for="pwd"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="pwd" required>
-
-    <button type="submit">Sign up</button>
-</form>
-
-<form action="/" method="GET">
-	<button class="btn btn-lg">home</button>
-</form>
-<br>
-<form action="/signup" method="GET">
-	<button class="btn btn-lg">sign up</button>
-</form>
+    <br>
+    <button type="submit" class="btn btn-lg">Sign up</button>
+  </form>
+</div>
 
 <script>
     let url = new URL(window.location.href);

@@ -4,5 +4,10 @@ body {
 }
 
 button {
-	margin: 2%;
+	margin: 1%;
+}
+
+input {
+	padding: 1%;
+	margin: 1%;
 }

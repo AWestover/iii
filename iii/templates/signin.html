@@ -8,26 +8,26 @@
 
 {% block header %}
 	<h1>iii sign in</h1>
+  <form action="/index">
+  	<button class="btn btn-lg">home</button>
+  </form>
+  <form action="/signup">
+  	<button class="btn btn-lg">sign up</button>
+  </form>
 {% endblock %}
 
 {% block content %}
-<form action="/main" method="post">
+<div class="form-group">
+  <form action="/main" method="post">
     <label for="uname"><b>Username</b></label>
     <input type="text" placeholder="Enter Username" name="uname" required>
-
+    <br>
     <label for="pwd"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="pwd" required>
-
-    <button type="submit">Login</button>
-</form>
-
-<form action="/index">
-	<button class="btn btn-lg">home</button>
-</form>
-<br>
-<form action="/signup">
-	<button class="btn btn-lg">sign up</button>
-</form>
+    <br>
+    <button class="btn btn-lg" type="submit">Sign in</button>
+  </form>
+</div>
 
 <script>
     let url = new URL(window.location.href);

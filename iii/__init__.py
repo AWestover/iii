@@ -19,7 +19,7 @@ def create_app(test_config=None):
     def signin():
         return render_template('signin.html')
 
-    @app.route('/signup', methods=["POST", "GET"])
+    @app.route('/signup', methods=("POST", "GET"))
     def signup():
         if request.method == "GET":
             return render_template('signup.html')
@@ -27,23 +27,23 @@ def create_app(test_config=None):
             db.insertUser(request.form['uname'], request.form['pwd'])
             return redirect(url_for('signin'))
 
-    @app.route('/main', methods=["POST"])
+    @app.route('/main', methods=("POST",))
     def main():
         if db.verifyUser(request.form['uname'], request.form['pwd']):
             return render_template('main.html')
         else:
             return redirect(url_for('signin', login='fail'))
 
-    @app.route('/insertAnnoyance', methods=["GET"])
+    @app.route('/insertAnnoyance', methods=("GET",))
     def insertAnnoyance():
         db.insertAnnoyance(request.args)
         return ""
     
-    @app.route('/getAnnoyances', methods=["GET"])
+    @app.route('/getAnnoyances', methods=("GET",))
     def getAnnoyances():
         return jsonify({"annoyances": db.selectAnnoyances(request.args["group"])})
 
-    @app.route('/database', methods=["GET"])
+    @app.route('/database', methods=("GET",))
     def database():
         return render_template("database.html", database=db.selectAllUsers())
 

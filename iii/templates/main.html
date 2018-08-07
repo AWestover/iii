@@ -1,70 +1,108 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='libs/chartist.min.css') }}">
+<script src="{{ url_for('static', filename='libs/chartist.min.js') }}"></script>
 {% endblock %}
 
 {% block title %}main{% endblock %}
 
 {% block header %}
-	<h1>iii main</h1>
+<h1>iii main</h1>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Disabled</a>
+      </li>
+    </ul>
+  </div>
+</nav>
 {% endblock %}
 
 {% block content %}
 <form action="/index">
 	<button class="btn btn-lg">Home</button>
 </form>
-<button class="btn btn-lg" onclick="logAnnoyance('you are stupid');">You are annoying</button>
-<button class="btn btn-lg" onclick="logAnnoyance('you are very dumb');">You are mean</button>
 
-<div class="card" id="lognew">
+<div class="annoyances">
+  <button class="btn btn-lg" onclick="logAnnoyance('you are stupid');">You are annoying</button>
+  <button class="btn btn-lg" onclick="logAnnoyance('you are very dumb');">You are mean</button>
 </div>
 
-<div class="card" id="log">
-	<h1>annoying</h1>
+<div class="graphs">
+  <div class="ct-chart"></div>
 </div>
+
+<div class="logs">
+  <div class="card" id="lognew">
+  </div>
+
+  <div class="card" id="log">
+  	<h1>annoying</h1>
+  </div>
+</divs>
 
 <script>
 
-    setInterval(getAnnoyances, 2000);
+  getAnnoyances();
+  setInterval(getAnnoyances, 2000);
 
-    function displayThem(data)
+  function displayThem(data)
+  {
+    let tmp = "<h1>annoying new</h1>";
+    for (let i = 0; i < data.length; i++)
     {
-        let tmp = "<h1>annoying new</h1>";
-        for (let i = 0; i < data.length; i++)
-        {
-            tmp += "<h1>group: " + data[i][0];
-            tmp += "<br>annoyance: " + data[i][1] + "</h1>";
-        }
-        $("#lognew").html(tmp);
+      tmp += "<h1>group: " + data[i][0];
+      tmp += "<br>annoyance: " + data[i][1] + "</h1>";
     }
+    $("#lognew").html(tmp);
+  }
 
-    function getAnnoyances()
-    {
-        $.get( "/getAnnoyances", {"group": "x"}, function( data ) {
-            displayThem(data["annoyances"]);
-        });
-    }
+  function getAnnoyances()
+  {
+    $.get( "/getAnnoyances", {"group": "x"}, function( data ) {
+      displayThem(data["annoyances"]);
+    });
+  }
 
-    function createEntry(data)
-    {
-        let tmp = "Dates "+ data['dts'];
-        tmp += "<br>";
-        tmp += "Annoyance " + data["annoyance"];
-        tmp += "<br><br>"
-        return tmp;
-    }
+  function createEntry(data)
+  {
+    let tmp = "Dates "+ data['dts'];
+    tmp += "<br>";
+    tmp += "Annoyance " + data["annoyance"];
+    tmp += "<br><br>"
+    return tmp;
+  }
 
-    function logAnnoyance(annoyance)
-    {
-        $.notify("annoyance logged " + annoyance);
-        let data = {
-          "dts": new Date(Date.now()),
-          "annoyance": annoyance
-        }
-        $('div#log').append(createEntry(data));
-        $.get("/insertAnnoyance", {"thegroup": "x", "stupid": "blah"});
+  function logAnnoyance(annoyance)
+  {
+    $.notify("annoyance logged " + annoyance);
+    let data = {
+      "dts": new Date(Date.now()),
+      "annoyance": annoyance
     }
+    $('div#log').append(createEntry(data));
+    $.get("/insertAnnoyance", {"thegroup": "x", "stupid": "blah"});
+  }
+
+  var data = {
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+    series: [[5, 2, 4, 2, 0]]
+  };
+  new Chartist.Line('.ct-chart', data);
 
 </script>
 {% endblock %}

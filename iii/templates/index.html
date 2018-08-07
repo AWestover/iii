@@ -8,6 +8,12 @@
 
 {% block header %}
 	<h1>iii home</h1>
+  <form action="/signin">
+	   <button class="btn btn-lg">sign in</button>
+  </form>
+  <form action="/signup">
+  	<button class="btn btn-lg submit">sign up</button>
+  </form>
 {% endblock %}
 
 {% block content %}
@@ -21,10 +27,4 @@
 <p>How do you use iii?<br>Simply log in and click on the button in the main page fitting the infraction you are reporting.</p>
 <p>What does iii do?<br>iii shows you the time at which an infraction was recorded and the infraction type. This helps you to know how to start aor avoid conflicts when used correctly. </p>
 
-<form action="/signin">
-	<button class="btn btn-lg">sign in</button>
-</form>
-<form action="/signup">
-	<button class="btn btn-lg submit">sign up</button>
-</form>
 {% endblock %}
