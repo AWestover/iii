@@ -1,19 +1,24 @@
 {% extends 'base.html' %}
 
 {% block head %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='signin.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='signin.css') }}">
+<style>
+  body {
+    background-color: lightgreen;
+  }
+</style>
 {% endblock %}
 
 {% block title %}signin{% endblock %}
 
 {% block header %}
-	<h1>iii sign in</h1>
-  <form action="/index">
-  	<button class="btn btn-lg">home</button>
-  </form>
-  <form action="/signup">
-  	<button class="btn btn-lg">sign up</button>
-  </form>
+<h1>iii sign in</h1>
+<form class="redir" action="/index">
+	<button class="btn btn-lg">home</button>
+</form>
+<form class="redir" action="/signup">
+	<button class="btn btn-lg">sign up</button>
+</form>
 {% endblock %}
 
 {% block content %}
@@ -30,12 +35,12 @@
 </div>
 
 <script>
-    let url = new URL(window.location.href);
-    let loginFail = url.searchParams.get("login");
-    if (loginFail == "fail")
-    {
-        $.notify("BAD LOGIN");
-    }
+  let url = new URL(window.location.href);
+  let loginFail = url.searchParams.get("login");
+  if (loginFail == "fail")
+  {
+      $.notify("BAD LOGIN");
+  }
 </script>
 
 {% endblock %}

@@ -1,6 +1,8 @@
 import sqlite3
 import hashlib
 
+# users should also store what groups you are in
+
 def createUserTable():
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
@@ -66,3 +68,11 @@ def selectAnnoyances(group):
     annoyances = c.fetchall()
     conn.close()
     return annoyances
+    
+def createGroupsTable():
+    conn = sqlite3.connect('annoyances.db')
+    c = conn.cursor()
+    c.execute('CREATE TABLE groups (groupid text)')
+    conn.commit()
+    conn.close()
+    

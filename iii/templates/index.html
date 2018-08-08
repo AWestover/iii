@@ -8,11 +8,11 @@
 
 {% block header %}
 	<h1>iii home</h1>
-  <form action="/signin">
+  <form class="redir" action="/signin">
 	   <button class="btn btn-lg">sign in</button>
   </form>
-  <form action="/signup">
-  	<button class="btn btn-lg submit">sign up</button>
+  <form class="redir" action="/signup">
+  	<button class="btn btn-lg">sign up</button>
   </form>
 {% endblock %}
 
@@ -26,5 +26,7 @@
 	iii stands for Index of Insolence in interactions.</p>
 <p>How do you use iii?<br>Simply log in and click on the button in the main page fitting the infraction you are reporting.</p>
 <p>What does iii do?<br>iii shows you the time at which an infraction was recorded and the infraction type. This helps you to know how to start aor avoid conflicts when used correctly. </p>
+
+<img src="{{ url_for('static', filename='img/iii.png') }}" alt='iii picture'>
 
 {% endblock %}

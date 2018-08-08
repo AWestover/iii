@@ -34,6 +34,10 @@ def create_app(test_config=None):
         else:
             return redirect(url_for('signin', login='fail'))
 
+    @app.route('/new-group')
+    def newgroup():
+        return render_template('new-group.html')
+    
     @app.route('/insertAnnoyance', methods=("GET",))
     def insertAnnoyance():
         db.insertAnnoyance(request.args)
