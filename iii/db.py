@@ -69,10 +69,10 @@ def selectAnnoyances(group):
     conn.close()
     return annoyances
     
-def createGroupsTable():
-    conn = sqlite3.connect('annoyances.db')
-    c = conn.cursor()
-    c.execute('CREATE TABLE groups (groupid text)')
-    conn.commit()
-    conn.close()
+# def createGroupsTable():
+#     conn = sqlite3.connect('groups.db')
+#     c = conn.cursor()
+#     c.execute('CREATE TABLE groups (groupid text)')
+#     conn.commit()
+#     conn.close()
     

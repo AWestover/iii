@@ -1,15 +1,19 @@
 # main app
 
+from os.path import join
 import os
 
 from flask import Blueprint, Flask, redirect, render_template, request, session, url_for, jsonify
+import matplotlib.pyplot as plt
+import numpy as np
+import datetime
 
 from . import db
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
-
+    
     @app.route('/index')
     @app.route('/')
     def index():
@@ -45,7 +49,21 @@ def create_app(test_config=None):
     
     @app.route('/getAnnoyances', methods=("GET",))
     def getAnnoyances():
-        return jsonify({"annoyances": db.selectAnnoyances(request.args["group"])})
+        ts = np.linspace(0,100,100)
+        xs = (ts/3)**2+np.random.random(ts.shape)*1000
+        plt.plot(ts, xs)
+        newPic = "img/fig_{}.png".format(str(datetime.datetime.now()))
+        for f in os.listdir('iii/static/img'):
+            if 'fig' in f:
+                cf = join('iii/static/img', f)
+                os.remove(cf)
+        plt.savefig(join("iii/static", newPic))
+        plt.cla()
+        
+        return jsonify({
+                "annoyances": db.selectAnnoyances(request.args["group"]), 
+                "picture": newPic
+            })
 
     @app.route('/database', methods=("GET",))
     def database():
