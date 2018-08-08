@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='signup.css') }}">
 <style>
   body {
     background-color: lightsalmon;
@@ -36,8 +35,8 @@
 
 <script>
   let url = new URL(window.location.href);
-  let loginFail = url.searchParams.get("signup");
-  if (loginFail == "fail")
+  let signupFail = url.searchParams.get("signup");
+  if (signupFail == "fail")
   {
       $.notify("BAD SIGNUP");
   }

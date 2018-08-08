@@ -13,10 +13,17 @@ def createUserTable():
 def insertUser(unm, pwd):
     pwdhash = hashlib.sha256(str.encode(pwd)).hexdigest()
     conn = sqlite3.connect('users.db')
-    c = conn.cursor()
-    c.execute('INSERT INTO users VALUES (?,?)', (unm, pwdhash))
-    conn.commit()
-    conn.close()
+    c = conn.cursor()    
+    c.execute('SELECT * FROM users WHERE uname=?', (unm,))
+    if len(c.fetchall()) == 0:
+        c.execute('INSERT INTO users VALUES (?,?)', (unm, pwdhash))
+        conn.commit()
+        conn.close()
+        return True 
+    else:
+        conn.close()
+    return False
+
 
 def selectAllUsers():
     conn = sqlite3.connect('users.db')

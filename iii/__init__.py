@@ -28,15 +28,17 @@ def create_app(test_config=None):
         if request.method == "GET":
             return render_template('signup.html')
         elif request.method == "POST":
-            db.insertUser(request.form['uname'], request.form['pwd'])
-            return redirect(url_for('signin'))
+            if db.insertUser(request.form['uname'], request.form['pwd']):
+                return redirect(url_for('signin'))
+            else:
+                return redirect(url_for('signup', signup='fail'))
 
     @app.route('/main', methods=("POST",))
     def main():
         if db.verifyUser(request.form['uname'], request.form['pwd']):
             return render_template('main.html')
         else:
-            return redirect(url_for('signin', login='fail'))
+            return redirect(url_for('signin', signin='fail'))
 
     @app.route('/new-group')
     def newgroup():

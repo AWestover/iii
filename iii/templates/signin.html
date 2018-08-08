@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='signin.css') }}">
 <style>
   body {
     background-color: lightgreen;
@@ -13,7 +12,7 @@
 
 {% block header %}
 <h1>iii sign in</h1>
-<form class="redir" action="/index">
+<form class="redir" action="/">
 	<button class="btn btn-lg">home</button>
 </form>
 <form class="redir" action="/signup">
@@ -36,10 +35,10 @@
 
 <script>
   let url = new URL(window.location.href);
-  let loginFail = url.searchParams.get("login");
-  if (loginFail == "fail")
+  let signinFail = url.searchParams.get("signin");
+  if (signinFail == "fail")
   {
-      $.notify("BAD LOGIN");
+      $.notify("BAD SIGNIN");
   }
 </script>
 
