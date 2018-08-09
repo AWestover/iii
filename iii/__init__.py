@@ -63,7 +63,7 @@ def create_app(test_config=None):
         plt.cla()
         
         return jsonify({
-                "annoyances": db.selectAnnoyances(request.args["group"]), 
+                "annoyances": db.selectAnnoyances(request.args["thegroup"]), 
                 "picture": newPic
             })
 

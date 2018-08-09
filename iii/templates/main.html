@@ -40,25 +40,27 @@ body {
 
 {% block content %}
 
-<div class="annoyances">
-  <button class="btn btn-lg" onclick="logAnnoyance('you are stupid');">You are annoying</button>
-  <button class="btn btn-lg" onclick="logAnnoyance('you are very dumb');">You are mean</button>
+<div class="annoyances card">
+  <h1>Log new</h1>
+  <h3>Description:</h3>
+  <input id="description"></input>
+  <br>
+  <button class="btn btn-lg" onclick="logAnnoyance('you are stupid');">You are stupid</button>
+  <button class="btn btn-lg" onclick="logAnnoyance('you are dumb');">You are dumb</button>
 </div>
 
 
 <div class="graphs card">
+  <h1>Overall progress</h1>
   <div class="ct-chart"></div>
 	<div id="graphimgs">
 		<img id="graphimg" src="{{ url_for('static', filename='img/iii.png') }}"></img>
 	</div>
 </div>
 
-<div class="logs">
-  <div class="card" id="lognew">
-  </div>
-
-  <div class="card" id="log">
-    <h1>annoying</h1>
+<div class="logs card">
+  <h1>Logs</h1>
+  <div id="lognew">
   </div>
 </div>
 
@@ -70,19 +72,26 @@ body {
   function displayThem(data)
   {
     let tmp = "<h1>annoying new</h1>";
+    let dates = [];
     for (let i = 0; i < data["annoyances"].length; i++)
     {
-      tmp += "<h1>group: " + data["annoyances"][i][0];
-      tmp += "<br>annoyance: " + data["annoyances"][i][1] + "</h1>";
+      tmp += "<p>Date: " + data["annoyances"][i][0];
+      tmp += "<br>Group: " + data["annoyances"][i][1];
+      tmp += "<br>Annoyance: " + data["annoyances"][i][2];
+      tmp += "<br>Description: " + data["annoyances"][i][3];
+      tmp += "<br>User: " + data["annoyances"][i][4] + "</p>";
+      tmp += "<br>"
+      
+      dates.push(Date.parse(data["annoyances"][i][0]));
     }
+    chart.update({series:[dates]});
     $("#lognew").html(tmp);
-		console.log("static/"+data["picture"]);
-		$("#graphimgs").html('<img id="graphimg" src="static/' + data["picture"] + '"></img>')
+		$("#graphimgs").html('<img id="graphimg" src="static/' + data["picture"] + '"></img>');
   }
 
   function getAnnoyances()
   {
-    $.get( "/getAnnoyances", {"group": "x"}, function(data) {
+    $.get( "/getAnnoyances", {"thegroup": "group"}, function(data) {
       displayThem(data);
     });
   }
@@ -99,19 +108,21 @@ body {
   function logAnnoyance(annoyance)
   {
     $.notify("annoyance logged " + annoyance);
-    let data = {
-      "dts": new Date(Date.now()),
-      "annoyance": annoyance
-    }
-    $('div#log').append(createEntry(data));
-    $.get("/insertAnnoyance", {"thegroup": "x", "stupid": "blah"});
+    $.get("/insertAnnoyance", {
+      "logtime": new Date(Date.now())+"", 
+      "thegroup": "group",
+      "thetype": annoyance,
+      "description": $('#description').val(),
+      "user": "x"
+    });
+    $('#description').val('');
   }
 
-  var data = {
+  let data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
     series: [[5, 2, 4, 2, 0]]
   };
-  new Chartist.Line('.ct-chart', data);
+  let chart = new Chartist.Line('.ct-chart', data);
 
 </script>
 {% endblock %}
